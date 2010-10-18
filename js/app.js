@@ -3,7 +3,7 @@ function show(message) {
   var hour = time[1] % 12 || 12;               // The prettyprinted hour.
   var period = time[1] < 12 ? 'a.m.' : 'p.m.'; // The period of the day.
   var notification = webkitNotifications.createNotification(
-      'images/48.jpg',                      // The image.
+      'images/128.gif',                      // The image.
       hour + time[2] + ' ' + period, // The title.
       message      // The body.
       );
