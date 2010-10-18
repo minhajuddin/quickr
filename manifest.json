@@ -1,0 +1,17 @@
+{
+  "name": "Quickr",
+   "browser_action": {
+      "default_icon": "images/48.gif",
+      "default_popup": "popup.html",
+      "default_title": "Quickr"
+   },
+   "icons": {
+      "48": "images/48.gif"
+   },
+    "description": "Add quick reminder",
+    "version": "0.2",
+    "permissions": ["tabs", "notifications"],
+    "options_page": "options.html",
+    "background_page": "background.html"
+}
+

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--<link rel="stylesheet" type="text/css" href="css/screen.css" />-->
+    <script type="text/javascript" src="app.js"> </script>
+    <style type='text/css'>
+    </style>
+    <script type="text/javascript" charset="utf-8">
+      window.onload = function(){
+        slotsInput = document.getElementById("slots");
+        var slots = db.get('slots');
+        var text = '';
+        for(var i = 0; i < slots.length; i++){
+          text += slots[i].hours + ':' + slots[i].minutes + '|';
+        }
+        slotsInput.value = text;
+      };
+    </script>
+    <title>Slotter</title>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1>Slotter</h1>
+      <textarea id='slots'></textarea>
+      <input type='button' value='Update' />
+    </div>
+  </body>
+</html>
+
