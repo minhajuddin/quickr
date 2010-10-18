@@ -18,31 +18,47 @@ var renderTimer = function(){
 };
 
 function deactivate(){
-    localStorage.isActive = 0;
+  localStorage.isActive = 0;
 }
 
 function isActive(){
-    return localStorage.isActive == 1;
+  return localStorage.isActive == 1;
 }
 function activate(){
-    localStorage.isActive = 1;
+  localStorage.isActive = 1;
 }
+
+var createReminder = function(){
+  var timer = +$("#minutes").focus().val();
+  var text = $("#text").val();
+  $("#minutes").val('');
+  $("#text").val('');
+  timer = timer * 60;
+  setTimer(timer, text);
+  activate();
+};
+
 var popupInit = function(){
-    setTimeout(renderTimer, 1000);
-    $("#set-reminder").click(function(){
-      var timer = +$("#minutes").focus().val();
-      $("#minutes").val('');
-      timer = timer * 60;
-      setTimer(timer);
-      activate();
+  setTimeout(renderTimer, 1000);
+  $("#set-reminder").click(createReminder);
+  renderTimer();
+  $("#minutes").focus();
+  $("#text,#minutes").keydown(function(event,ui){
+      if(event.which == "13")
+      createReminder();
       });
 };
-
-
-var setTimer = function(timer){
+var setTimer = function(timer, text){
   if(timer < 0) return;
+  if(typeof text !== 'undefined'){
+    localStorage.text = text;
+  }
   localStorage.timer = timer;
 };
+var getText = function(){
+  return localStorage.text;
+};
+
 var getTimer = function(){
   return +localStorage.timer
 };
@@ -50,7 +66,7 @@ var getTimer = function(){
 var updateTimer = function(){
   var timer = getTimer();
   if(timer === 0 && isActive()){
-    show('timeout');
+    show(getText());
     deactivate();
   }
   if(timer > 0){
@@ -60,64 +76,7 @@ var updateTimer = function(){
 }
 
 var backgroundInit = function(){
-    setTimer(0);
-    renderTimer();
-    updateTimer();
-    deactivate();
+  setTimer(0);
+  updateTimer();
+  deactivate();
 };
-
-    //setTimeout(function(){
-    //show('Timeout');
-    //}, timer * 1000);
-
-
-/*
-   var db = {
-get:function(key){
-var data = localStorage['key'];
-return JSON.parse(data);
-},
-set:function(key, value){
-var data = JSON.stringify(value);
-localStorage['key'] = data;
-}
-};
-
-function timeEqual(first, second){
-if(first.hours != second.hours)
-return false;
-if(first.minutes != second.minutes)
-return false;
-return true;
-};
-
-function check(){
-var slots = db.get('slots');
-var i = 0;
-var currentTime = new Date();
-for(; i < slots.length; i++){
-var slot = slots[i];
-if(timeEqual(slot.endTime, toTime(currentTime))){
-show('End of slot');
-}
-}
-};
-
-function Time(hours, minutes){
-this.hours = hours;
-this.minutes = minutes;
-}
-
-function toTime(date){
-return new Time(date.getHours(), date.getMinutes());
-}
-
-function setupSlots(){
-var slots = [
-{endTime:new Time(15, 56)},
-{endTime:new Time(15, 58)},
-{endTime:new Time(15, 59)}
-];
-db.set('slots', slots);
-};
-*/
