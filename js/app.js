@@ -61,6 +61,7 @@ var updateTimer = function(){
 
 var backgroundInit = function(){
     setTimer(0);
+    renderTimer();
     updateTimer();
     deactivate();
 };

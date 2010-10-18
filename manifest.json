@@ -6,7 +6,9 @@
       "default_title": "Quickr"
    },
    "icons": {
-      "48": "images/48.gif"
+      "16": "images/16.gif",
+      "48": "images/48.gif",
+      "128": "images/128.gif"
    },
     "description": "Add quick reminder",
     "version": "0.2",

@@ -3,7 +3,7 @@
     <script type="text/javascript" charset="utf-8">
 </script>
   <head>
-    <!--<link rel="stylesheet" type="text/css" href="css/screen.css" />-->
+    <link rel="stylesheet" type="text/css" href="screen.css" />
     <script type="text/javascript" src="js/jquery-1.4.2.min.js"> </script>
     <script type="text/javascript" src="js/app.js"> </script>
     <script type="text/javascript">
@@ -11,38 +11,16 @@
           popupInit();
           });
     </script>
-    <style type='text/css'>
-
-      *{ padding: 0; margin:0;}
-      body{
-        color:#444;
-        font-size:2em;
-      }
-      #wrapper{
-        width:400px;
-        height:400px;
-        margin:0 auto;
-        border-top:10px solid #222;
-        border-bottom:10px solid #222;
-      }
-      input{font-size: 1em;}
-      #form{
-        margin:0 auto;
-        margin-top:50px;
-      }
-      #minutes{width:100px;margin-left:40px;}
-    </style>
     <title>Quickr</title>
   </head>
   <body>
     <div id="wrapper">
-      <h1 style='text-align:center;'>Quickr</h1>
       <div id='form'>
-        <input type='text' name='minutes' id='minutes' />
+        <input type='text' id='minutes' /><input type='text' id='text' />
+        <br />
         <input type='button' value='Set Reminder' id='set-reminder'/>
       </div>
-      <div style='text-align:center;' id='countdown'>0</div>
-      <input type='button' value='Get Timer' onclick='javascript:alert(isActive() + ":" + localStorage.isActive + ":" + localStorage.timer);' />
+      <div id='countdown'>00:00</div>
     </div>
   </body>
 </html>
