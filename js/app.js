@@ -1,3 +1,6 @@
+function updateBadge(text){
+  chrome.browserAction.setBadgeText({text: text.toString()});
+}
 function show(message) {
   var time = /(..)(:..)/(Date());              // The prettyprinted time.
   var hour = time[1] % 12 || 12;               // The prettyprinted hour.
@@ -39,7 +42,6 @@ var createReminder = function(){
 };
 
 var popupInit = function(){
-  setTimeout(renderTimer, 1000);
   $("#set-reminder").click(createReminder);
   renderTimer();
   $("#minutes").focus();
@@ -65,6 +67,8 @@ var getTimer = function(){
 
 var updateTimer = function(){
   var timer = getTimer();
+  var minutes = Math.floor(timer/60);
+  updateBadge(minutes);
   if(timer === 0 && isActive()){
     show(getText());
     deactivate();
