@@ -86,6 +86,7 @@ var getTimer = function(){
 var updateTimer = function(){
   var timer = getTimer();
   var minutes = Math.floor(timer/60);
+  minutes = minutes + 'm';
   updateBadge(minutes);
   if(timer === 0 && isActive()){
     show(getText());
