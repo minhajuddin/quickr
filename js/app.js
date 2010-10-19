@@ -1,3 +1,19 @@
+function setDefaultDuration(duration){
+  localStorage.defaultDuration = duration;
+}
+
+function getDefaultDuration(){
+  return localStorage.defaultDuration;
+}
+
+function setDefaultText(text){
+  localStorage.defaultText = text;
+}
+
+function getDefaultText(){
+  return localStorage.defaultText;
+}
+
 function updateBadge(text){
   chrome.browserAction.setBadgeText({text: text.toString()});
 }
@@ -43,6 +59,8 @@ var createReminder = function(){
 
 var popupInit = function(){
   $("#set-reminder").click(createReminder);
+  $("#text").val(getDefaultText())
+  $("#minutes").val(getDefaultDuration())
   renderTimer();
   $("#minutes").focus();
   $("#text,#minutes").keydown(function(event,ui){
@@ -80,6 +98,12 @@ var updateTimer = function(){
 }
 
 var backgroundInit = function(){
+  if(typeof getDefaultDuration() === 'undefined'){
+    setDefaultDuration(30);
+  }
+  if(typeof getDefaultText() === 'undefined'){
+    setDefaultText('Ad hoc');
+  }
   setTimer(0);
   updateTimer();
   deactivate();
