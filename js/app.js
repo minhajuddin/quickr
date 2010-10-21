@@ -31,8 +31,8 @@ var Quickr = (function(){
                 chrome.browserAction.setBadgeText({text: text.toString()});
               },
     createReminder : function(timer, text){
-                       timer = timer * 60;
-                       this.set('timer', timer);
+                       remainingSeconds = timer * 60;
+                       this.set('remainingSeconds', remainingSeconds);
                        this.set('text', text);
                        this.activate();
                      },
@@ -50,14 +50,12 @@ var Quickr = (function(){
     backgroundInit:function(){
                      this.setIfNull('defaultDuration', 30);
                      this.setIfNull('defaultText','Ad hoc');
-                     this.set('timer', 0);
-                     //updateTimer();
-                     this.deactivate();
+                     this.set('remainingSeconds', 0);
                    },
     timerString:function(){
-                  var timer = +this.get('timer');
-                  var minutes = Math.floor(timer/60);
-                  var seconds = timer % 60;
+                  var remainingSeconds = this.getRemainingSeconds();
+                  var minutes = Math.floor(remainingSeconds/60);
+                  var seconds = remainingSeconds % 60;
                   return minutes + ":" + seconds;
                 },
     getRemainingSeconds:function(){
@@ -65,11 +63,13 @@ var Quickr = (function(){
                         },
     updateTimer : function(){
                     //get the remainingSeconds
-                    var remainingSeconds = this.getRemainingSeconds();
+                    var remainingSeconds = Quickr.getRemainingSeconds();
                     //if it is > 0 update badge, timer and set a callback
+                    console.log('remaining seconds is ', remainingSeconds, typeof remainingSeconds, remainingSeconds > 0);
                     if(remainingSeconds > 0){
                       this.notify(this.get('text'));
-                      setTimeout(updateTimer, 1000);
+                      this.setBadge(remainingSeconds);
+                      setTimeout(this.updateTimer, 1000);
                     }
                   }
   };

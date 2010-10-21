@@ -12,14 +12,6 @@ var popupInit = function(){
     Quickr.createReminder(timer, text);
   };
 
-  $("#set-reminder").click(createReminder);
-
-
-  //var renderTimer = function(){
-    //$("#countdown").html(Quickr.timerString());
-    //setTimeout(renderTimer,1000);
-  //};
-  //renderTimer();
   $("#text,#minutes").keydown(function(event,ui){
     if(event.which == "13"){
       createReminder();
