@@ -1,3 +1,5 @@
+//jslint predefined vars => localStorage,chrome
+//localStorage,chrome, webkitNotifications, setTimeout
 var Quickr = (function(){
   return {
     Convert:{
@@ -12,7 +14,7 @@ var Quickr = (function(){
                     }
             },
     activate:function(){
-               this.updateTimer();
+               this.set('trigger',true);
              },
     get:function(key){
           return localStorage[key];
@@ -31,7 +33,7 @@ var Quickr = (function(){
                 chrome.browserAction.setBadgeText({text: text.toString()});
               },
     createReminder : function(timer, text){
-                       remainingSeconds = timer * 60;
+                       var remainingSeconds = timer * 60;
                        this.set('remainingSeconds', remainingSeconds);
                        this.set('text', text);
                        this.activate();
@@ -51,7 +53,19 @@ var Quickr = (function(){
                      this.setIfNull('defaultDuration', 30);
                      this.setIfNull('defaultText','Ad hoc');
                      this.set('remainingSeconds', 0);
+                     this.checkTimer();
                    },
+    checkTimer: function(){
+                  var trigger = !!this.get('trigger');
+                  if(trigger){
+                    this.updateTimer();
+                    this.set('trigger','');
+                  }
+                  var that = this;
+                  setTimeout(function(){
+                      that.checkTimer();
+                      }, 1000);
+                },
     timerString:function(){
                   var remainingSeconds = this.getRemainingSeconds();
                   var minutes = Math.floor(remainingSeconds/60);
@@ -61,15 +75,23 @@ var Quickr = (function(){
     getRemainingSeconds:function(){
                           return +this.get('remainingSeconds');
                         },
+    getRemainingMinutes:function(){
+                          return Math.floor(this.getRemainingSeconds()/60);
+                        },
     updateTimer : function(){
                     //get the remainingSeconds
-                    var remainingSeconds = Quickr.getRemainingSeconds();
+                    var remainingSeconds = this.getRemainingSeconds();
+                    remainingSeconds = remainingSeconds - 1;
+                    this.set('remainingSeconds',remainingSeconds);
+                    this.setBadge(this.getRemainingMinutes().toString() + 'm');
                     //if it is > 0 update badge, timer and set a callback
-                    console.log('remaining seconds is ', remainingSeconds, typeof remainingSeconds, remainingSeconds > 0);
                     if(remainingSeconds > 0){
+                      var that = this;
+                      setTimeout(function(){
+                          that.updateTimer();
+                          }, 1000);
+                    }else{
                       this.notify(this.get('text'));
-                      this.setBadge(remainingSeconds);
-                      setTimeout(this.updateTimer, 1000);
                     }
                   }
   };

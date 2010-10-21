@@ -5,11 +5,11 @@
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript" charset="utf-8">
       $(function(){
-          $("#default-text").val(getDefaultText());
-          $("#default-duration").val(getDefaultDuration());
+          $("#default-text").val(Quickr.get('defaultText'));
+          $("#default-duration").val(Quickr.get('defaultDuration'));
           $("#set-default-text").click(function(){
-            setDefaultDuration($("#default-duration").val());
-            setDefaultText($("#default-text").val());
+            Quickr.set('defaultDuration', $("#default-duration").val());
+            Quickr.set('defaultText', $('#default-text').val());
             alert('defaults configured');
             });
           });
