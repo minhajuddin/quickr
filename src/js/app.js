@@ -53,6 +53,7 @@ var Quickr = (function(){
                      this.setIfNull('defaultDuration', 30);
                      this.setIfNull('defaultText','Ad hoc');
                      this.set('remainingSeconds', 0);
+                     this.set('trigger','');
                      this.checkTimer();
                    },
     checkTimer: function(){
